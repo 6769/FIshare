@@ -1,9 +1,8 @@
 import shelve
 import string
-import  sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
-DATA_FILE = 'guestbook.dat'
+import sys
+
+DATA_FILE = 'guestbook'
 
 
 def save_data( comment, create_at):
@@ -31,8 +30,8 @@ def load_data():
 def delete_data(msgindex):
     database = shelve.open(DATA_FILE)
     greeting_list = database.get('greeting_list', [])
-    print type(greeting_list)
-    print greeting_list
+    print(type(greeting_list))
+    print(greeting_list)
     msgindex=string.atoi(msgindex,10)
     del greeting_list[msgindex]
     database['greeting_list'] = greeting_list
