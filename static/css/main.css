@@ -7,8 +7,10 @@ body {
 
 h1 {
     padding:0 lem;
-    color:#FFFFFF;
+    color:#222;
 }
+a{text-decoration:none}
+
 
 #main {
     padding:0;
@@ -16,7 +18,11 @@ h1 {
 
 #form-area {
     padding:0.5em 2em;
-    background-color:#78B8F8;
+    background-color:#8b9aa9;
+}
+
+#uploadzone{
+    background-color: #ddd;
 }
 
 #entries-area {
@@ -28,3 +34,25 @@ h1 {
     padding:0.5em lem;
     background-color:#DBDBFF;
 }
+
+textarea{
+    background-color:#eee;
+    height:120px;
+    width:700px;
+}
+
+pre code ul {
+	list-style: decimal;
+	margin: 0px 0px 0 30px !important;
+	padding: 0px;
+}
+pre code ul li {
+	list-style: decimal-leading-zero;
+	border-left: 1.5px solid #03ea27 !important;
+	padding: 5px!important;
+	margin: 0 !important;
+	line-height: 14px;
+	word-break: break-all;
+	word-wrap: break-word;
+}
+

@@ -1,5 +1,4 @@
 import shelve
-import string
 import sys
 
 DATA_FILE = 'guestbook'
@@ -32,7 +31,7 @@ def delete_data(msgindex):
     greeting_list = database.get('greeting_list', [])
     print(type(greeting_list))
     print(greeting_list)
-    msgindex=string.atoi(msgindex,10)
+    msgindex=int(msgindex)
     del greeting_list[msgindex]
     database['greeting_list'] = greeting_list
     database.close()

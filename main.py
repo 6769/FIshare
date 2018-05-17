@@ -31,6 +31,7 @@ except FileNotFoundError:
 def index():
     greeting_list = load_data()
     files_list = os.listdir(app.config['UPLOAD_FOLDER'])
+    files_list.sort()
     return render_template('index.html', 
                         files_list=files_list, 
                         greeting_list=greeting_list)
@@ -41,17 +42,17 @@ def uploaded_file(filename):
                                filename)
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['POST'])
 def upload_file():
-    if request.method == 'POST':
-        file = request.files['file']
-        if file:
-            filename = file.filename
-            print(filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            file_url = url_for('uploaded_file', filename=filename, _external=True)
-            return render_template('index.html') + file_url
-    return redirect('/')
+    
+    file = request.files['file']
+    if file:
+        filename = file.filename
+        print(filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        file_url = url_for('uploaded_file', filename=filename, _external=True)
+        return render_template('index.html') + file_url
+
 
 
 @app.route('/delete/<filename>')
@@ -68,9 +69,10 @@ def post():
     """Comment's target url
     """
     comment = request.form.get('comment')
-    create_at = datetime.now()
+    if( 0 == len(comment.split())):
+        return redirect('/')
+    create_at = datetime.now().ctime()
     save_data(comment, create_at)
-
     return redirect('/')
 
 @app.route('/deletemsg/<msgindex>')
