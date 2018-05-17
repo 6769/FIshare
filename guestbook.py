@@ -2,36 +2,35 @@ import shelve
 import sys
 
 DATA_FILE = 'guestbook'
-
+TAG_LIST=   'greeting_list'
 
 def save_data( comment, create_at):
     """
     save data from form submitted
     """
-    database = shelve.open(DATA_FILE)
-    if 'greeting_list' not in database:
-        greeting_list = []
-    else:
-        greeting_list = database['greeting_list']
-    greeting_list.insert(
-        0, { 'comment': comment, 'create_at': create_at})
-    database['greeting_list'] = greeting_list
-    database.close()
+    with shelve.open(DATA_FILE) as database: 
+        if TAG_LIST not in database:
+            greeting_list = []
+        else:
+            greeting_list = database[TAG_LIST]
+        greeting_list.insert(
+            0, { 'comment': comment, 'create_at': create_at})
+        database[TAG_LIST] = greeting_list
+    
 
 def load_data():
     """
     load saved data
     """
-    database = shelve.open(DATA_FILE)
-    greeting_list = database.get('greeting_list', [])
-    database.close()
+    with shelve.open(DATA_FILE) as database:
+        greeting_list = database.get(TAG_LIST, [])
     return greeting_list
 def delete_data(msgindex):
-    database = shelve.open(DATA_FILE)
-    greeting_list = database.get('greeting_list', [])
-    print(type(greeting_list))
-    print(greeting_list)
-    msgindex=int(msgindex)
-    del greeting_list[msgindex]
-    database['greeting_list'] = greeting_list
-    database.close()
+    with shelve.open(DATA_FILE) as database:
+        greeting_list = database.get(TAG_LIST, [])
+        print(type(greeting_list))
+        print(greeting_list)
+        msgindex=int(msgindex)
+        del greeting_list[msgindex]
+        database[TAG_LIST] = greeting_list
+    
